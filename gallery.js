@@ -58,6 +58,7 @@ function onGalleryClick(e) {
 
 function addOpenClass() {
   lightboxEl.classList.add('is-open')
+  window.addEventListener('keydown', lightboxElOnEscPress)
 }
 
 galleryEl.addEventListener('click', onGalleryClick)
@@ -71,7 +72,25 @@ closeBtnEl.addEventListener('click', onCloseBtnClick)
 
 function onCloseBtnClick(e) {
   lightboxEl.classList.remove('is-open')
+  window.removeEventListener('keydown', lightboxElOnEscPress)
   // Очистка значения атрибута src элемента img.lightbox__image
   imgEl.src = "";
   imgEl.alt = "";
+}
+
+// Закрытие модального окна по клику на div.lightbox__overlay
+const overlayEL = document.querySelector('.lightbox__overlay')
+overlayEL.addEventListener('click', onOverlayClick)
+
+function onOverlayClick() {
+  lightboxEl.classList.remove('is-open')
+  imgEl.src = "";
+  imgEl.alt = "";
+}
+
+// Закрытие модального окна по нажатию клавиши ESC
+function lightboxElOnEscPress(e) {
+  if (e.code === 'Escape') {
+    onCloseBtnClick()
+  }
 }

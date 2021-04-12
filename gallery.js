@@ -32,9 +32,12 @@ galleryEl.insertAdjacentHTML('afterbegin', makeGallery)
 const lightboxEl = document.querySelector('.js-lightbox')
 
 var imgEl = document.querySelector('img.lightbox__image')
-// console.log(imgSrcEl)
+// console.log(imgEl)
 
 // Реализация делегирования на галерее ul.js-gallery и получение url большого изображения.
+
+
+
 function onGalleryClick(e) {
   e.preventDefault();
   // console.log(e.target.nodeName)
@@ -68,29 +71,27 @@ galleryEl.addEventListener('click', onGalleryClick)
 const closeBtnEl = document.querySelector('button[data-action="close-lightbox"]')
 // console.log(closeBtnEl)
 
-closeBtnEl.addEventListener('click', onCloseBtnClick)
+closeBtnEl.addEventListener('click', onCloseBtnAndOverlayClick)
 
-function onCloseBtnClick(e) {
+function onCloseBtnAndOverlayClick(e) {
   lightboxEl.classList.remove('is-open')
   window.removeEventListener('keydown', lightboxElOnEscPress)
   // Очистка значения атрибута src элемента img.lightbox__image
-  imgEl.src = "";
-  imgEl.alt = "";
+  removeImgElSrcAndAlt(imgEl.src, imgEl.alt)
 }
 
 // Закрытие модального окна по клику на div.lightbox__overlay
 const overlayEL = document.querySelector('.lightbox__overlay')
-overlayEL.addEventListener('click', onOverlayClick)
-
-function onOverlayClick() {
-  lightboxEl.classList.remove('is-open')
-  imgEl.src = "";
-  imgEl.alt = "";
-}
+overlayEL.addEventListener('click', onCloseBtnAndOverlayClick)
 
 // Закрытие модального окна по нажатию клавиши ESC
 function lightboxElOnEscPress(e) {
   if (e.code === 'Escape') {
-    onCloseBtnClick()
+    onCloseBtnAndOverlayClick()
   }
+}
+
+function removeImgElSrcAndAlt(src, alt) {
+  imgEl.src = "";
+  imgEl.alt = "";
 }

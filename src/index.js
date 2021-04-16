@@ -1,6 +1,6 @@
-import galleryItems from './gallery-items.js'
+import galleryItems from './gallery-items.js';
 // console.log(galleryItems)
-
+import './css/styles.css';
 
 
 // Создание и рендер разметки по массиву данных и предоставленному шаблону.
